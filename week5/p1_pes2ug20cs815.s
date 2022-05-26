@@ -1,0 +1,31 @@
+.DATA
+A: .WORD 1,2,3,4,5,6,7,8,9
+B: .WORD 0
+.TEXT
+LDR r0, =A
+LDR r9, =B
+MOV r1, #0
+MOV r2, #3
+MOV r3, #4
+MOV r4, #0
+ITRT1:MOV r5, #0
+CMP r4, r2
+BNE ITRT2
+BEQ ITRT4
+ITRT2:
+MUL r6, r2, r3
+MLA r7, r6, r4, r0
+MLA r8, r5, r3, r7
+LDR r7, [r8]
+ADD r1, r1, r7
+STR r1, [r9]
+ADD r5, r5, #1
+CMP r5, r2
+BEQ ITRT3
+BNE ITRT2
+ITRT3:
+ADD r4, r4, #1
+B ITRT1
+ITRT4:
+SWI 0X11
+.END
